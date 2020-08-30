@@ -1,5 +1,6 @@
 const initialState = {
-    historyList: []
+    historyList: [],
+    history: null
 }
 
 const bikesReducer = (state = initialState, action) => {
@@ -8,6 +9,11 @@ const bikesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 historyList: action.payload
+            }
+        case "SET_MAP_HISTORY":
+            return {
+                ...state,
+                history: action.payload
             }
         default:
             return state;

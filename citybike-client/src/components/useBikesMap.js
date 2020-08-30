@@ -31,7 +31,7 @@ function useBikeMap() {
     useEffect(() => {
         if (response) {
             historyList.push({
-                date: Date.now(),
+                date: new Date(),
                 list: response
             });
             dispatch(updateHistoryList(historyList));

@@ -44,8 +44,8 @@ function UseMap({ properties }) {
                         }}
                     >
                         <div>
-                            <h2>{activePopUp.name}</h2>
-                            <p>{activePopUp.free_bikes}</p>
+                            <h2>{`Station: ${activePopUp.name}`}</h2>
+                            <p>{`${activePopUp.free_bikes} Bikes avilable`}</p>
                         </div>
                     </Popup>
                 )}
