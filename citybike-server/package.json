@@ -2,15 +2,26 @@
   "name": "citybike-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch:build": "npx webpack -w",
+    "watch:server": "nodemon dist/server.js",
+    "dev": "npm-run-all --parallel watch:*",
+    "start": "node dist/server.js"
   },
   "author": "SmartHop Inc",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.1",
     "express": "^4.16.4",
-    "socket.io": "^2.1.1"
+    "socket.io": "^2.1.1",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-node-externals": "^2.5.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "npm-run-all": "^4.1.5",
+    "standard": "^14.3.4"
   }
 }
