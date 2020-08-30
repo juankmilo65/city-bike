@@ -104,7 +104,7 @@ eval("const express = __webpack_require__(/*! express */ \"express\");\nconst ro
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const express = __webpack_require__(/*! express */ \"express\");\nconst http = __webpack_require__(/*! http */ \"http\");\nconst socketIo = __webpack_require__(/*! socket.io */ \"socket.io\");\nconst axios = __webpack_require__(/*! axios */ \"axios\");\nconst citybikeurl = \"http://api.citybik.es/v2/networks/decobike-miami-beach\"\n\nconst port = process.env.PORT || 4001;\nconst index = __webpack_require__(/*! ./routes/index */ \"./src/server/routes/index.js\");\nconst app = express();\n\napp.use(index);\n\nconst server = http.createServer(app);\nconst io = socketIo(server); // < Interesting!\nlet interval;\n\nconst getApi = async socket => {\n  try {\n    const response = await axios.get(citybikeurl);\n    socket.emit(\"CityBikesData\", response.data);\n    console.log(\"Called\")\n  }\n  catch (error) {\n    console.log(`Error trying ${error} to consume the API`);\n  }\n}\n\nio.on(\"connection\", socket => {\n  var socketId = socket.id;\n  var clientIp = socket.request.connection.remoteAddress;\n\n  if (interval) {\n    clearInterval(interval)\n  }\n  interval = setInterval(() => getApi(socket), 10000);\n\n  console.log('New connection ' + socketId + ' from ' + clientIp);\n  socket.on(\"disconnect\", () => {\n    console.log(\"Client disconnected\");\n  });\n});\n\n\n\nserver.listen(port, () => console.log(`Listening on port ${port}`));\n\n\n\n\n\n//# sourceURL=webpack:///./src/server/server.js?");
+eval("const express = __webpack_require__(/*! express */ \"express\");\nconst http = __webpack_require__(/*! http */ \"http\");\nconst socketIo = __webpack_require__(/*! socket.io */ \"socket.io\");\nconst axios = __webpack_require__(/*! axios */ \"axios\");\nconst citybikeurl = \"http://api.citybik.es/v2/networks/decobike-miami-beach\"\nconst cors = __webpack_require__(/*! cors */ \"cors\");\n\nconst port = process.env.PORT || 4001;\nconst index = __webpack_require__(/*! ./routes/index */ \"./src/server/routes/index.js\");\nconst app = express();\n\napp.use(cors());\napp.use(index);\n\nconst server = http.createServer(app);\nconst io = socketIo(server); // < Interesting!\nlet interval;\n\nconst getApi = async socket => {\n  try {\n    const response = await axios.get(citybikeurl);\n    socket.emit(\"CityBikesData\", response.data);\n    console.log(\"Called\")\n  }\n  catch (error) {\n    console.log(`Error trying ${error} to consume the API`);\n  }\n}\n\nio.on(\"connection\", socket => {\n  var socketId = socket.id;\n  var clientIp = socket.request.connection.remoteAddress;\n\n  if (interval) {\n    clearInterval(interval)\n  }\n  interval = setInterval(() => getApi(socket), 10000);\n\n  console.log('New connection ' + socketId + ' from ' + clientIp);\n  socket.on(\"disconnect\", () => {\n    console.log(\"Client disconnected\");\n  });\n});\n\n\n\nserver.listen(port, () => console.log(`Listening on port ${port}`));\n\n\n\n\n\n//# sourceURL=webpack:///./src/server/server.js?");
 
 /***/ }),
 
@@ -116,6 +116,17 @@ eval("const express = __webpack_require__(/*! express */ \"express\");\nconst ht
 /***/ (function(module, exports) {
 
 eval("module.exports = require(\"axios\");\n\n//# sourceURL=webpack:///external_%22axios%22?");
+
+/***/ }),
+
+/***/ "cors":
+/*!***********************!*\
+  !*** external "cors" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"cors\");\n\n//# sourceURL=webpack:///external_%22cors%22?");
 
 /***/ }),
 
