@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { updateHistoryList } from "../store/bikes/actions";
 import socketIOClient from "socket.io-client";
 import UseMap from "./useMap";
@@ -8,7 +9,9 @@ import axios from 'axios';
 
 function useBikeMap() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const historyList = useSelector(state => state.bike.historyList);
+    const [redirect, setRedirect] = useState(false);
     const [response, setResponse] = useState(false);
     const [endpoint, setEndpoint] = useState("http://127.0.0.1:4001");
     const [mainEndpoint, setMainEndpoint] = useState("http://127.0.0.1:4001/getBikeInfo");
@@ -41,10 +44,26 @@ function useBikeMap() {
 
         setCallSocket(true);
     }
+    const redirectHistory = () => {
+        setRedirect(true);
+    }
+
+    const renderRedirect = () => {
+        if (redirect) {
+            history.push('/history');
+        }
+    }
 
     return (
         response &&
-        <UseMap properties={response} />
+        <div>
+            <button
+                onClick={() => redirectHistory()}
+            >History</button>
+            <UseMap properties={response} />
+            {renderRedirect()}
+        </div>
+
     )
 }
 
